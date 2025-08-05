@@ -70,7 +70,6 @@ sudo ./wifi_test.py
 1. Add two APs at distinct positions.
 2. Add 3–4 STAs scattered around.
 3. Call `net.pingAll()` and inspect associations.
-4. (Optional) Use `net.draw()` to visualize node placement.
 
 ---
 
