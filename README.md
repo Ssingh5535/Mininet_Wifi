@@ -27,6 +27,10 @@ mininet-wifi> sta1 ping -c3 10.0.0.2
 
 Expect 0% packet loss between sta1 and sta2.
 
+![Device Power](/Images/Pingall.png)  
+
+
+
 ---
 
 ## 2. Minimal Python Script
