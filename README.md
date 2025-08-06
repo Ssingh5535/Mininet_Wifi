@@ -57,17 +57,15 @@ CLI(net)
 net.stop()
 ```
 
-
-![mn Wifi](/Images/Pingall.png) 
-
-
-
 **Run:**
 
 ```bash
 chmod +x wifi_test.py
 sudo ./wifi_test.py
 ```
+
+![Wifi Pingall](/Images/Pingall.png) 
+
 
 ---
 
