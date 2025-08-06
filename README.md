@@ -79,6 +79,10 @@ sudo ./wifi_test.py
 2. Add 3–4 STAs scattered around.
 3. Call `net.pingAll()` and inspect associations.
 
+![Multiple AP](/Images/MultiAP.png)  
+
+
+
 ---
 
 ## 4. Introducing Mobility
