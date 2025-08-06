@@ -17,6 +17,7 @@ sudo mn --wifi \
     --mode g \
     --channel 1
 ```
+![mn Wifi](/Images/Wifi.png) 
 
 **In‑CLI Tests:**
 
@@ -27,9 +28,9 @@ mininet-wifi> sta1 ping -c3 10.0.0.2
 
 Expect 0% packet loss between sta1 and sta2.
 
-![Device Power](/Images/Pingall.png)  
+![sta1](/Images/sta1.png)  
 
-
+![sta2](/Images/sta2.png)  
 
 ---
 
@@ -55,6 +56,11 @@ net.pingAll()
 CLI(net)
 net.stop()
 ```
+
+
+![mn Wifi](/Images/Pingall.png) 
+
+
 
 **Run:**
 
