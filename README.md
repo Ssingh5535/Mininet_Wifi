@@ -87,18 +87,67 @@ sudo ./wifi_test.py
 
 ## 4. Introducing Mobility
 
-**Goal:** Simulate a moving client.
+**Goal:** Simulate a moving client (STA1) crossing between two APs and observe handovers.
 
-**Mobility Block:**
+**Topology Recap:**
+- **AP1** at (20, 80), **AP2** at (80, 20)
+- **STA1...STA4**, with **STA1** mobile, others static.
 
+**Mobility Schedule:**
 ```python
 net.startMobility(time=0)
-net.mobility(sta1, 'start', time=1,  position='0,50,0')
-net.mobility(sta1, 'stop',  time=30, position='100,50,0')
-net.stopMobility(time=31)
+net.mobility(sta1, 'start', time=2,  position='10,90,0')  # t=2s
+net.mobility(sta1, 'stop',  time=32, position='90,10,0')  # t=32s
+net.stopMobility(time=33)
 ```
 
-Observe handover events in the CLI or via logs.
+### 4.1 Baseline Connectivity
+- **t = 0–2 s** (before movement)
+  - `net.pingAll()` reports **0% packet loss** (12/12 received).
+  - All STAs communicate via their initial AP associations.
+
+### 4.2 Early Mobility (t = 2 s)
+- Immediately after STA1 begins to move:
+  ```
+  *** pingAll at t=2s
+  sta1 → sta2    RTT ≈ 39.9 ms
+  sta1 → sta3    RTT ≈ 12.8 ms
+  … 0% packet loss
+  ```
+  - STA1 still within AP1’s coverage; no handover yet.
+
+### 4.3 Midpoint (t = 12 s)
+- As STA1 approaches the overlap zone:
+  ```
+  *** pingAll at t=12s
+  sta1 → sta2    RTT ≈ 13.3 ms
+  sta1 → sta4    RTT ≈ 23.1 ms
+  … 0% packet loss
+  ```
+  - STA1 may see AP2’s beacon but remains on AP1 until explicit reassociation.
+
+### 4.4 Late Mobility & Handover (t = 22 s)
+- Near AP2’s domain:
+  ```
+  *** pingAll at t=22s
+  sta1 → sta2    RTT ≈ 2.6 ms    ← now served by AP2
+  sta1 → sta3    RTT ≈ 8.8 ms
+  … 0% packet loss
+  ```
+  - Monitor thread logs the handover event (associatedTo changes).
+  - Connectivity stays seamless through AP migration logic.
+
+### 4.5 Post-Mobility (t = 32 s)
+- After STA1 fully crosses:
+  ```
+  *** pingAll at t=32s
+  sta1 → sta2    RTT ≈ 6.8 ms
+  sta1 → sta3    RTT ≈ 8.1 ms
+  … 0% packet loss
+  ```
+  - STA1 is now firmly under AP2’s coverage.
+
+
 
 ---
 
